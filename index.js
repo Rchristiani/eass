@@ -25,6 +25,25 @@ app.get('/emojis', (req,res) => {
 	}
 });
 
+app.get('/emojis/lorem', (req,res) => {
+	const loremArr = [];
+	const query = req.query;
+
+	const words = query.limit || 100;
+
+	for (let x = 0; x < words; x++) {
+		let wordLength = Math.ceil(Math.random() * 5);
+		let word = utils.limit(wordLength, emojis).join("");
+		loremArr.push(word);
+	}
+
+	const loremStr = loremArr.join(" ");
+
+	res.send({
+		response: loremStr
+	})
+});
+
 app.get('/emojis/random', (req,res) => {
 	res.send({
 		emoji: utils.random(emojis)
