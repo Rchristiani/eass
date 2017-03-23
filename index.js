@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const emojis = require('./data/emojis.js');
+const utils = require('./utils');
 
 app.use(function(req, res, next) {
 	res.setHeader('Access-Control-Allow-Origin', '*');
@@ -10,19 +11,23 @@ app.use(function(req, res, next) {
 	next();
 });
 
-function random(arr) {
-	return arr[Math.floor(Math.random() * arr.length)];
-} 
-
 app.get('/emojis', (req,res) => {
-	res.send({
-		emojis
-	});
+	const query = req.query;
+	if(query.limit) {
+		res.send({
+			emojis: utils.limit(query.limit,emojis)
+		});
+	}
+	else {
+		res.send({
+			emojis
+		});
+	}
 });
 
 app.get('/emojis/random', (req,res) => {
 	res.send({
-		emoji: random(emojis)
+		emoji: utils.random(emojis)
 	});
 });
 
