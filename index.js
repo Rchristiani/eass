@@ -27,20 +27,23 @@ app.get('/emojis', (req,res) => {
 
 app.get('/emojis/lorem', (req,res) => {
 	const loremArr = [];
+	let loremPars = [];
 	const query = req.query;
-
 	const words = query.limit || 100;
+	const paragraphs = query.paragraphs || 1;
 
-	for (let x = 0; x < words; x++) {
-		let wordLength = Math.ceil(Math.random() * 5);
-		let word = utils.limit(wordLength, emojis).join("");
-		loremArr.push(word);
+	for (let x = 0; x < paragraphs; x++) {
+		for (let x = 0; x < words; x++) {
+			let wordLength = Math.ceil(Math.random() * 5);
+			let word = utils.limit(wordLength, emojis).join("");
+			loremArr.push(word);
+		}
+		let loremStr = loremArr.join(" ");
+		loremPars.push(loremStr);
 	}
-
-	const loremStr = loremArr.join(" ");
-
+		loremPars = loremPars.join("\n\n");
 	res.send({
-		response: loremStr
+		response: loremPars
 	})
 });
 
