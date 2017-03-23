@@ -29,7 +29,7 @@ app.get('/emojis/lorem', (req,res) => {
 	const loremArr = [];
 	let loremPars = [];
 	const query = req.query;
-	const words = query.limit || 100;
+	const words = query.words || 100;
 	const paragraphs = query.paragraphs || 1;
 
 	for (let x = 0; x < paragraphs; x++) {
